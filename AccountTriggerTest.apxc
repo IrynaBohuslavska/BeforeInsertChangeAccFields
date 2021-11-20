@@ -1,0 +1,37 @@
+@isTest
+private class AccountTriggerTest {
+    private static List<Account> genereteRecords (String billingStateInput, String shippingStateInput){
+        List<Account> result = new List<Account>();
+        for (Integer i = 0; i < 200; i++){
+            result.add(new Account(Name = 'name',
+                                   BillingState = billingStateInput,
+                                   ShippingState = shippingStateInput));
+        }
+        return result;
+    }
+    
+    @isTest
+    static void sucssecInsert200AccountsCACA(){
+        List<Account> result = AccountTriggerTest.genereteRecords('CA','CA');
+        
+        Test.startTest();
+        insert result;
+        Test.stopTest();
+        
+        List<Account> savedAccounts = [SELECT Id FROM Account];
+        System.assertEquals(200, savedAccounts.size());
+    }
+    
+        @isTest
+    static void sucssecInsert200AccountsCAAA(){
+        List<Account> result = AccountTriggerTest.genereteRecords('CA','AA');
+        
+        Test.startTest();
+        insert result;
+        Test.stopTest();
+        
+        List<Account> savedAccounts = [SELECT Id FROM Account];
+        System.assertEquals(200, savedAccounts.size());
+    }
+    
+}
